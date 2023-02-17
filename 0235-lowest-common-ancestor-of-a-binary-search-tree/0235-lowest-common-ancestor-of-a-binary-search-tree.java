@@ -10,10 +10,6 @@
 
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        // if(root.val == p.val || root.val == q.val) return root;
-        // if(root.left!=null)
-        //     if(root.left.val == p.val || root.left.val == q.val)
-        //         return 
         boolean findLeft = find(root.left,p,q);
         boolean findRight = find(root.right,p,q);
         if(!findLeft && !findRight) return root;
