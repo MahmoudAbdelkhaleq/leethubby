@@ -1,9 +1,7 @@
 class Solution {
     public int minEatingSpeed(int[] piles, int h) {
-        int sum=0;
         int max=0;
         for(int i =0;i<piles.length;i++){
-            sum+=piles[i];
             if(piles[i]>max)max = piles[i];
         }
         int min =1;
