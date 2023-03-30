@@ -10,7 +10,6 @@ class Solution {
         int max = 0;
         boolean oneLetter = false;
         for (int count : data.values()){
-            System.out.println(count);
             if(count%2==0) max +=count;
             else{
                 max+=count-1;
