@@ -10,7 +10,6 @@ class Solution {
             }
             isVisited = new boolean[graph.length];
         }
-        Collections.sort(safeNodes);
         return safeNodes;
     }
     private static boolean checkSafety(int node, int[][] graph, boolean [] isVisited, boolean [] safe, boolean [] notSafe){
