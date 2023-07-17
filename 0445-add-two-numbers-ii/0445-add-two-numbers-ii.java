@@ -24,10 +24,7 @@ class Solution {
             }
             else
                 carry = 0;
-            res.val = sum;
-            ListNode newNode = new ListNode();
-            newNode.next = res;
-            res = newNode;
+            res = addNode(res, sum);
         }
         while(!stack1.isEmpty()){
             int sum = stack1.pop()+carry;
@@ -37,10 +34,7 @@ class Solution {
             }
             else
                 carry = 0;
-            res.val = sum;
-            ListNode newNode = new ListNode();
-            newNode.next = res;
-            res = newNode;
+            res = addNode(res, sum);
         }
         while(!stack2.isEmpty()){
             int sum = stack2.pop()+carry;
@@ -50,17 +44,11 @@ class Solution {
             }
             else
                 carry = 0;
-            res.val = sum;
-            ListNode newNode = new ListNode();
-            newNode.next = res;
-            res = newNode;
+            res = addNode(res, sum);
         }
-        if(carry == 1){
-            res.val = 1;
-            ListNode newNode = new ListNode();
-            newNode.next = res;
-            res = newNode;
-        }
+        if(carry == 1)
+            res = addNode(res,1);
+        
         return res.next;
     }
     public static void fillStack(ListNode l, Stack s){
@@ -68,5 +56,11 @@ class Solution {
             s.push(l.val);
             l = l.next;
         }
+    }
+    public static ListNode addNode(ListNode l, int sum){
+        l.val = sum;
+        ListNode newNode = new ListNode();
+        newNode.next = l;
+        return newNode;
     }
 }
