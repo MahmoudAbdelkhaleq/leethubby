@@ -1,72 +1,50 @@
 class Solution {
+    static final int[][] directions = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2},
+            {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
+    static double [][][]dp;
+
     public double knightProbability(int n, int k, int row, int column) {
-        // if(k==0)return 1.0;
-        // if(n<3) return 0.0;
-        // int onBoard = paths(n, k, row, column);
-        // double all = Math.pow(8, k);
-        // return (onBoard+0.0)/all;
-        int[][] directions = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2},
-                              {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
-
-        // Initialize the dynamic programming table
-        double[][][] dp = new double[k + 1][n][n];
-        dp[0][row][column] = 1.0;
-
-        // Iterate over the number of moves
-        for (int moves = 1; moves <= k; moves++) {
-            // Iterate over the cells on the chessboard
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    // Iterate over possible directions
-                    for (int[] direction : directions) {
-                        int prevI = i - direction[0];
-                        int prevJ = j - direction[1];
-                        // Check if the previous cell is within the chessboard
-                        if (prevI >= 0 && prevI < n && prevJ >= 0 && prevJ < n) {
-                            // Add the previous probability divided by 8
-                            dp[moves][i][j] += dp[moves - 1][prevI][prevJ] / 8.0;
-                        }
+        if(k==0)return 1.0;
+        if(n<3) return 0.0;
+        dp = new double[k+1][n][n];
+        for(int i = 0;i<k+1;i++){
+            for(int j =0;j<n;j++){
+                Arrays.fill(dp[i][j],-1.0);
+            }
+        }
+        dp[k][row][column] = paths(n, k, row, column);
+        return (dp[k][row][column]+0.0)/8;
+    }
+    private static double paths(int n, int k, int row, int column){
+        if(k==1){
+            return count(n, row, column)+0.0;
+        }
+        else{
+            double counter = 0;
+            for(int i =0;i<directions.length;i++){
+                int nextRow = row+directions[i][0];
+                int nextColumn = column+directions[i][1];
+                if(nextRow>-1 && nextRow<n && nextColumn>-1 && nextColumn<n){
+                    if(dp[k-1][nextRow][nextColumn]==-1.0){
+                        dp[k-1][nextRow][nextColumn] = (paths(n, k-1, nextRow, nextColumn))/8;
+                        counter+=dp[k-1][nextRow][nextColumn];
                     }
+                    else
+                        counter+=dp[k-1][nextRow][nextColumn];
                 }
             }
+            return counter;
         }
-
-        // Calculate total probability by summing probabilities for all cells
-        double totalProbability = 0.0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                totalProbability += dp[k][i][j];
+    }
+    private static int count(int n, int row, int column){
+        int count = 0;
+        for(int i =0;i<directions.length;i++){
+            int nextRow = row+directions[i][0];
+            int nextColumn = column+directions[i][1];
+            if(nextRow>-1 && nextRow<n && nextColumn>-1 && nextColumn<n){
+                count++;
             }
         }
-        return totalProbability;
+        return count;
     }
-    // private static int paths(int n, int k, int row, int column){
-    //     if(k==1){
-    //         return count(n, row, column);
-    //     }
-    //     else{
-    //         int counter = 0;
-    //         if(row+2<n && column+1<n) counter+=paths(n, k-1, row+2, column+1);
-    //         if(row+1<n && column+2<n) counter+=paths(n, k-1, row+1, column+2);
-    //         if(row+2<n && column-1>=0) counter+=paths(n, k-1, row+2, column-1);
-    //         if(row+1<n && column-2>=0) counter+=paths(n, k-1, row+1, column-2);
-    //         if(row-1>=0 && column-2>=0) counter+=paths(n, k-1, row-1, column-2);
-    //         if(row-2>=0 && column-1>=0) counter+=paths(n, k-1, row-2, column-1);
-    //         if(row-1>=0 && column+2<n) counter+=paths(n, k-1, row-1, column+2);
-    //         if(row-2>=0 && column+1<n) counter+=paths(n, k-1, row-2, column+1);
-    //         return counter;
-    //     }
-    // }
-    // private static int count(int n, int row, int column){
-    //     int count = 0;
-    //     if(row+2<n && column+1<n) count++;
-    //     if(row+1<n && column+2<n) count++;
-    //     if(row+2<n && column-1>=0) count++;
-    //     if(row+1<n && column-2>=0) count++;
-    //     if(row-1>=0 && column-2>=0) count++;
-    //     if(row-2>=0 && column-1>=0) count++;
-    //     if(row-1>=0 && column+2<n) count++;
-    //     if(row-2>=0 && column+1<n) count++;
-    //     return count;
-    // }
 }
