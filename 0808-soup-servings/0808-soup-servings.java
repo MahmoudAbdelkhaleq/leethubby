@@ -1,26 +1,24 @@
 // class Solution {
-//     static Map<Integer, Map<Integer, Double>> dp;
+//     static double [][] dp;
 //     public double soupServings(int n) {
 //         n = (int)Math.ceil(n / 25.0);
-//         dp = new HashMap<>();
-//         for (int k = 1; k <= n; k++) {
-//             if (calc(k, k) > 1 - 1e-5) {
-//                 return 1.0;
-//             }
+//         dp = new double[n+1][n+1];
+//         for(int i =0;i<dp.length;i++){
+//             dp[0][i]=1;
 //         }
+//         dp[0][0] = 0.5;
 //         return calc(n, n);
 //     }
 //     private static double calc(int a, int b){
+//         if(a>0 && b<=0) return 0;
+//         if(a<=0 && b>0) return 1;
 //         if(a<=0 && b<=0) return 0.5;
-//         if(a<=0) return 1;
-//         if(b<=0) return 0;
-//         if(dp.containsKey(a) && dp.get(a).containsKey(b)) dp.get(a).get(b);
-//         double res = (calc(a-4,b) + 
+//         if(dp[a][b]!=0) return dp[a][b];
+//         dp[a][b] = (calc(a-4,b) + 
 //                     calc(a-3,b-1) + 
 //                     calc(a-2,b-2) + 
 //                     calc(a-1,b-3))/4.0;
-//         dp.computeIfAbsent(a, k->new HashMap<>()).put(b, res);
-//         return res;
+//         return dp[a][b];
 //     }
 // }
 class Solution {
