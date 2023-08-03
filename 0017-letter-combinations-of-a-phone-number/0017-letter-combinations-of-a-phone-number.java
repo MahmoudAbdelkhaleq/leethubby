@@ -12,7 +12,6 @@ class Solution {
     public void letterCombinationsHelper(String digits, List<String> result){
         if(digits.equals("")){
             result.add(myString);
-            // myString = myString.substring(0,myString.length()-1);
             return;
         }
         int num = Integer.parseInt(digits.charAt(0)+"");
