@@ -4,12 +4,10 @@ class Solution {
         for(int i =0;i<matrix.length;i++){
             Arrays.fill(dp[i], Integer.MIN_VALUE);
         }
-        for(int i =0;i<matrix[0].length;i++){
-            solve(matrix, dp, 0, i);
-        }
         int min = Integer.MAX_VALUE;
-        for(int i =0;i<dp[0].length;i++){
-            if(min>dp[0][i])min = dp[0][i];
+        for(int i =0;i<matrix[0].length;i++){
+            int ans = solve(matrix, dp, 0, i);
+            if(min>ans)min = ans;
         }
         return min;
     }
