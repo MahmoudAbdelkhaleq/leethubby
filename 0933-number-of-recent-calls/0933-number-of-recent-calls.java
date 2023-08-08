@@ -1,20 +1,15 @@
 class RecentCounter {
-
-    int counter;
-    List<Integer> req;
+    LinkedList<Integer> req;
     public RecentCounter() {
-        req = new ArrayList<>();
-        counter= 0;
+        req = new LinkedList<>();
     }
     
     public int ping(int t) {
-        req.add(t);
-        counter++;
-        int reqs = 1;
-        for(int i =req.size()-2;i>=0;i--){
-            if(t-req.get(i)<=3000) reqs++;
+        req.addLast(t);
+        while(t-req.getFirst() > 3000){
+            req.removeFirst();
         }
-        return reqs;
+        return req.size();
     }
 }
 
