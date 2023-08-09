@@ -1,23 +1,16 @@
 class Solution {
     public boolean increasingTriplet(int[] nums) {
-        boolean exists = false;
-        ArrayList<Integer> unique= new ArrayList<Integer>();
-        for(int i =0;i<nums.length;i++){
-            if (!unique.contains(nums[i]))
-                unique.add(nums[i]);
-        }
-        if(unique.size()>2){
-        for(int i=0;i<nums.length;i++){
-            for(int j=i+1;j<nums.length;j++){
-                if(nums[i]<nums[j]){
-                    for(int k=j+1;k<nums.length;k++){
-                        if(nums[i]<nums[j] && nums[j]<nums[k])
-                            return true;
-                    }
-                }
+        int n1 = Integer.MAX_VALUE;
+        int n2 = Integer.MAX_VALUE;
+        for(int n3: nums){
+            if(n3<=n1){
+                n1=n3;
+            }else if(n3<=n2){
+                n2=n3;
+            }else{
+                return true;
             }
         }
-        }
-        return exists;
+        return false;
     }
 }
