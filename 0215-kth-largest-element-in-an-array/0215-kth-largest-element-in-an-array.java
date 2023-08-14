@@ -18,10 +18,9 @@ class Solution {
         for (int num: nums) {
             count[num - minValue]++;
         }
-        int remain = k;
         for (int num = count.length - 1; num >= 0; num--) {
-            remain -= count[num];
-            if (remain <= 0) {
+            k -= count[num];
+            if (k <= 0) {
                 return num + minValue;
             }
         }
