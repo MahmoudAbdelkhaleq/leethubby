@@ -20,12 +20,10 @@ class Solution {
                         break;
                     }
                 }
+                else break;
             }
             if(dp[i]==0)dp[i]=dp[i-1];
         }
         return dp[pairs.length-1];
     }
-//     private int solve (int [][] pairs, int index, int [] dp){
-        
-//     }
 }
