@@ -12,9 +12,8 @@ class Solution {
         int [] dp = new int[pairs.length];
         dp[0]=1;
         for(int i =1;i<dp.length;i++){
-            int max = dp[i-1];
             for(int j =i-1;j>-1;j--){
-                if(dp[j] == max){
+                if(dp[j] == dp[i-1]){
                     if(pairs[i][0]>pairs[j][1]){
                         dp[i]=1+dp[j];
                         break;
