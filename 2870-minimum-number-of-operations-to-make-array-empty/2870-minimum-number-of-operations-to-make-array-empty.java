@@ -1,9 +1,8 @@
 class Solution {
     public int minOperations(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>();
-        for(int i = 0;i<nums.length;i++){
-            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
-        }
+        for(int i = 0;i<nums.length;i++)
+            map.merge(nums[i], 1, Integer::sum);
         int res = 0;
         for (Integer num : map.values()) {
             if(num == 1) return -1;
