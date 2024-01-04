@@ -5,9 +5,7 @@ class Solution {
             map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
         }
         int res = 0;
-        for (Map.Entry<Integer, Integer> set :
-             map.entrySet()) {
-            int num = set.getValue();
+        for (Integer num : map.values()) {
             if(num == 1) return -1;
             if(num%3 == 0)res+=num/3;
             else res+=num/3 + 1;
