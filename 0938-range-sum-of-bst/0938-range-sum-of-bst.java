@@ -19,7 +19,8 @@ class Solution {
     }
     private int helper(TreeNode node, int low, int high){
         if(node == null) return 0;
-        if(node.val<low || node.val>high)return helper(node.left, low, high) + helper(node.right, low, high);;
+        if(node.val<low) return helper(node.right, low, high);
+        if(node.val>high)return helper(node.left, low, high);
         return node.val+helper(node.left, low, high) + helper(node.right, low, high);
     }
 }
