@@ -1,24 +1,13 @@
 class Solution {
     public int numberOfBeams(String[] bank) {
         int res = 0;
-        int start = 0;
-        int end = 1;
-        if(bank.length == 1) return 0;
-        boolean found = countOnes(bank[start]) == 0;
-        while(end<bank.length){
-            if(!found && countOnes(bank[start]) == 0){
-                found = true;
-                start++;
-                end = start+1;
-                continue;
-            }
-            if(countOnes(bank[end]) == 0){
-                end++;
-                continue;
-            }
-            res+=countOnes(bank[start])*countOnes(bank[end]);
-            start = end++;
-            found = false;
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0;i<bank.length;i++){
+            int count = countOnes(bank[i]);
+            if(count != 0) list.add(count);
+        }
+        for(int i = 0;i<list.size()-1;i++){
+            res+=list.get(i)*list.get(i+1);
         }
         return res;
     }
