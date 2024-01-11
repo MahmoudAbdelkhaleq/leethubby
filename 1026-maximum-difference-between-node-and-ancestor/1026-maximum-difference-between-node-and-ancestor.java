@@ -14,30 +14,15 @@
  * }
  */
 class Solution {
+    
     public int maxAncestorDiff(TreeNode root) {
-        if(root == null) return 0;
-        if(root.left == null && root.right == null) return 0;
-        int ans1 = Math.max(Math.abs(root.val-max(root.left)),Math.abs(root.val-min(root.left)));
-        int ans2 = Math.max(Math.abs(root.val-max(root.right)),Math.abs(root.val-min(root.right)));
-        if(root.left == null) ans1 = 0;
-        if(root.right == null) ans2 = 0;
-        int ans3 = maxAncestorDiff(root.left);
-        int ans4 = maxAncestorDiff(root.right);
-        int ans5 = Math.max(ans1, ans2);
-        int ans6 = Math.max(ans3, ans4);
-        int ans = Math.max(ans5, ans6);
-        return ans;
+        return dfs(root, root.val, root.val);
     }
-    private int max(TreeNode node){
-        if(node == null) return 0;
-        return Math.max(node.val, Math.max(max(node.left), max(node.right)));
-    }
-    private int min(TreeNode node){
-        if(node == null) return 0;
-        return minf(node);
-    }
-    private int minf(TreeNode node){
-        if(node == null) return 100001;
-        return Math.min(node.val, Math.min(minf(node.left), minf(node.right)));
+    private int dfs(TreeNode node, int max, int min){
+        if(node == null) return max-min;
+        return Math.max(
+            dfs(node.left,Math.max(node.val,max), Math.min(node.val,min)),
+            dfs(node.right,Math.max(node.val,max), Math.min(node.val,min))
+        );
     }
 }
