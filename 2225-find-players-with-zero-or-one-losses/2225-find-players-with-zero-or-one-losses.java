@@ -1,27 +1,21 @@
 class Solution {
     public List<List<Integer>> findWinners(int[][] matches) {
-        Set<Integer> winners = new HashSet<>();
-        Set<Integer> lostOneMatch = new HashSet<>();
-        Set<Integer> lostMatches = new HashSet<>();
+        HashMap<Integer, Integer> records = new HashMap<>();
         for(int i = 0;i<matches.length;i++){
-            winners.add(matches[i][0]);
-            winners.add(matches[i][1]);
+            records.computeIfAbsent(matches[i][0], k -> 0);
+            records.put(matches[i][1], records.getOrDefault(matches[i][1], 0)+1);
         }
-        for(int i = 0;i<matches.length;i++){
-            if(winners.contains(matches[i][1]))
-                winners.remove(matches[i][1]);
+        List<Integer> winners = new ArrayList<>();
+        List<Integer> loseOneMatch = new ArrayList<>();
+        for(Map.Entry<Integer, Integer> entry : records.entrySet()) {
+            if(entry.getValue() == 0) winners.add(entry.getKey());
+            if(entry.getValue() == 1) loseOneMatch.add(entry.getKey());
         }
-        for(int i = 0;i<matches.length;i++){
-            if(lostOneMatch.contains(matches[i][1]))
-                lostMatches.add(matches[i][1]);
-            else lostOneMatch.add(matches[i][1]);
-        }
-        lostOneMatch.removeAll(lostMatches);
-        List<List<Integer>> res= new ArrayList<>();
-        res.add(new ArrayList<>(winners));
-        res.add(new ArrayList<>(lostOneMatch));
-        Collections.sort(res.get(0));
-        Collections.sort(res.get(1));
+        Collections.sort(winners);
+        Collections.sort(loseOneMatch);
+        List<List<Integer>> res = new ArrayList<>();
+        res.add(winners);
+        res.add(loseOneMatch);
         return res;
     }
 }
