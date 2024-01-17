@@ -5,14 +5,12 @@ class Solution {
             if(map.get(arr[i])==null)map.put(arr[i],1);
             else map.put(arr[i], map.get(arr[i])+1);
         }
-        List<Integer> occ = new ArrayList<>();
+        Set<Integer> occ = new HashSet<>();
         for (Map.Entry<Integer, Integer> set :
              map.entrySet()) {
+            int n = set.getValue();
+            if(occ.contains(n))return false;
             occ.add(set.getValue());
-        }
-        for(int i =0;i<occ.size();i++){
-            int val = occ.remove(i--);
-            if(occ.contains(val))return false;
         }
         return true;
     }
