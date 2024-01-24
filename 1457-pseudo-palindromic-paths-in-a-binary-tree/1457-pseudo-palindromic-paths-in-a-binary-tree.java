@@ -16,26 +16,26 @@
 class Solution {
     public int pseudoPalindromicPaths (TreeNode root) {
             int [] res = new int [1];
-            dfs(root, new HashMap<>(), res);
+            dfs(root, new int[10], res);
             return res[0];
         }
-        private void dfs(TreeNode node, HashMap<Integer, Integer> map, int [] res){
+        private void dfs(TreeNode node, int [] freq, int [] res){
             if(node == null) return;
             if(node.left == null && node.right == null){
-                map.put(node.val, map.getOrDefault(node.val, 0)+1);
-                if(palindrome(map)) res[0]++;
-                map.put(node.val, map.get(node.val)-1);
+                freq[node.val]++;
+                if(palindrome(freq)) res[0]++;
+                freq[node.val]--;
                 return;
             }
-            map.put(node.val, map.getOrDefault(node.val, 0)+1);
-            dfs(node.left, map, res);
-            dfs(node.right, map, res);
-            map.put(node.val, map.get(node.val)-1);
+            freq[node.val]++;
+            dfs(node.left, freq, res);
+            dfs(node.right, freq, res);
+            freq[node.val]--;
             
         }
-        private boolean palindrome(HashMap<Integer, Integer> map){
+        private boolean palindrome(int[] freq){
             boolean theOne = false;
-            for(int x:map.values()){
+            for(int x:freq){
                 if(x%2!=0){
                     if(theOne) return false;
                     else theOne = true;
