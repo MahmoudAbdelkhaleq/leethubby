@@ -10,6 +10,6 @@ class Solution {
         for(int i = 30;i>=diffBits;i--){
             mask+=(long)Math.pow(2,i);
         }
-        return (int)(left & right & mask);
+        return left & right & mask;
     }
 }
