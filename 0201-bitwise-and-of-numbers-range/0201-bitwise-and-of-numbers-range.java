@@ -8,7 +8,7 @@ class Solution {
         }
         int mask = 0;
         for(int i = 30;i>=diffBits;i--){
-            mask+=(long)Math.pow(2,i);
+            mask+=Math.pow(2,i);
         }
         return left & right & mask;
     }
