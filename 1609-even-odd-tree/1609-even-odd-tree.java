@@ -20,22 +20,16 @@ class Solution {
         queue.offer(root);
         while(!queue.isEmpty()){
             int size = queue.size();
-            int prev = -1;
+            int prev = level%2 == 0 ? 0 : 1000001;
             for(int i = 0;i<size;i++){
                 TreeNode node = queue.poll();
                 if(node.left!=null) queue.offer(node.left);
                 if(node.right!=null) queue.offer(node.right);
-                if(prev == -1){
-                    if(level%2==0 && node.val%2 == 0) return false;
-                    if(level%2==1 && node.val%2 == 1) return false;
+                if(level%2==0){
+                    if(node.val%2==0 || node.val<=prev) return false;
                 }
                 else{
-                    if(level%2==0){
-                        if(node.val%2==0 || node.val<=prev) return false;
-                    }
-                    else{
-                        if(node.val%2==1 || node.val>=prev) return false;
-                    }
+                    if(node.val%2==1 || node.val>=prev) return false;
                 }
                 prev = node.val;
             }
