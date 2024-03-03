@@ -13,19 +13,18 @@ class Solution {
         if(head.next == null) return null;
         int steps = 0;
         ListNode c1 = head;
-        ListNode c2 = head;
         ListNode prev = null;
         while(c1!=null){
             if(steps < n)
                 steps++;
             else{
-                prev = c2;
-                c2 = c2.next;
+                if(prev == null) prev = head;
+                else prev = prev.next;
             }
             c1 = c1.next;
         }
         if(prev == null) return head.next;
-        prev.next = c2.next;
+        prev.next = prev.next.next;
         return head;
     }
 }
