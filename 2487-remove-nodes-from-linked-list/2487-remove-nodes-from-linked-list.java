@@ -17,16 +17,13 @@ class Solution {
             while(!stack.isEmpty() && current.val>stack.peek().val){
                 stack.pop();
             }
+            if(stack.isEmpty()) 
+                head = current;
+            else
+                stack.peek().next = current;
             stack.push(current);
             current = current.next;
         }
-        ListNode res = stack.pop();
-        res.next = null;
-        while(!stack.isEmpty()){
-            ListNode node = stack.pop();
-            node.next = res;
-            res = node;
-        }
-        return res;
+        return head;
     }
 }
