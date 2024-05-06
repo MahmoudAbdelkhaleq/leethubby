@@ -11,18 +11,19 @@
 class Solution {
     public ListNode removeNodes(ListNode head) {
         if(head.next == null) return head;
-        Stack<Integer> stack = new Stack<>();
+        Stack<ListNode> stack = new Stack<>();
         ListNode current = head;
         while(current!=null){
-            while(!stack.isEmpty() && current.val>stack.peek()){
+            while(!stack.isEmpty() && current.val>stack.peek().val){
                 stack.pop();
             }
-            stack.push(current.val);
+            stack.push(current);
             current = current.next;
         }
-        ListNode res = null; 
+        ListNode res = stack.pop();
+        res.next = null;
         while(!stack.isEmpty()){
-            ListNode node = new ListNode(stack.pop());
+            ListNode node = stack.pop();
             node.next = res;
             res = node;
         }
