@@ -9,9 +9,9 @@ class Solution {
         HashSet<Integer> covered = new HashSet<>();
         for(Map.Entry<Integer, Integer[]> row: map.entrySet()){
             int key = row.getKey();
+            Integer[] value = row.getValue();
             if(!covered.contains(key)){
                 covered.add(key);
-                Integer[] value = row.getValue();
                 while(map.containsKey(key+value[1]+1)){
                     value[1]++;
                     covered.add(key+value[1]+1);
@@ -21,9 +21,6 @@ class Solution {
                     covered.add(key-value[0]-1);
                 }
             }
-        }
-        for(Map.Entry<Integer, Integer[]> row: map.entrySet()){
-            Integer [] value = row.getValue();
             int length = value[0] + value[1] + 1;
             if(max<length){
                 max = length;
