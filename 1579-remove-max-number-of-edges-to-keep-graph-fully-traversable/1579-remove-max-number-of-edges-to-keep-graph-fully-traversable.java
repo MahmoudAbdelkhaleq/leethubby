@@ -1,94 +1,76 @@
 class Solution {
     public int maxNumEdgesToRemove(int n, int[][] edges) {
-
-        DisjointSet aliceGraph = new DisjointSet(n);
-        DisjointSet bobGraph = new DisjointSet(n);
-        Arrays.sort(edges, (a,b) -> (b[0]-a[0]));
-
-        int adddedEdges = 0;
-
-        for(int[] e: edges) {
-            int type = e[0];
-            int u = e[1]-1;
-            int v = e[2]-1;
-
-            if (type == 3) {
-                boolean isAliceConnected = aliceGraph.unionByRank(u,v);
-                boolean isBobConnected = bobGraph.unionByRank(u,v);
-                if (isAliceConnected  || isBobConnected) {
-
-                    adddedEdges++;
+        UnionFind aliceMap = new UnionFind(n);
+        UnionFind bobMap = new UnionFind(n);
+        Arrays.sort(edges, (a,b)->(b[0]-a[0]));
+        int addedEdges = 0;
+        for(int [] edge: edges){
+            int type = edge[0];
+            int u = edge[1]-1;
+            int v = edge[2]-1;
+            if(type == 3){
+                if(aliceMap.union(u, v)){
+                    bobMap.union(u, v);
+                    addedEdges++;
                 }
             }
-            else if (type == 2) {
-
-
-                 boolean isBobConnected = bobGraph.unionByRank(u,v);
-
-
-                 if (isBobConnected ) {
-                    adddedEdges++;
+            else if(type == 1){
+                if(aliceMap.union(u, v)){
+                    addedEdges++;
                 }
-                
             }
-            else if (type == 1) {
-                boolean isAliceConnected = aliceGraph.unionByRank(u,v);
-
-                 if (isAliceConnected) {
-                    adddedEdges++;
+            else{
+                if(bobMap.union(u, v)){
+                    addedEdges++;
                 }
+            }
+            if(aliceMap.numOfGroups() == 1 && bobMap.numOfGroups() == 1){
+                return edges.length-addedEdges;
             }
         }
-
-
-
-        if (aliceGraph.count > 1 || bobGraph.count > 1) return -1;
-        return edges.length - adddedEdges;
+        return -1;
     }
-
 }
-
-
-class DisjointSet{
-    
-    int[] parent;
-    int[] rank;
+class UnionFind {
+    // parent for every node
+    int [] parent;
+    // size of each group
+    int [] size;
+    // no of groups
     int count;
-
-    DisjointSet(int n) {
-        this.parent = new int[n];
-        this.rank = new int[n];
-        for(int i=0;i<n;++i) {
+    public UnionFind(int n){
+        parent = new int[n];
+        size = new int [n];
+        for(int i = 0;i<n;i++){
             parent[i] = i;
-            rank[i] = 0;
+            size[i] = 0;
         }
-        this.count = n;
+        count = n;
     }
-
-    public int ultimateParent(int v){
-        if (parent[v]!=v) {
-            parent[v] = ultimateParent(parent[v]);
+    public int numOfGroups(){
+        return count;
+    }
+    public int getParent(int node){
+        if(parent[node] == node){
+            return node;
         }
-        return parent[v];
+        return getParent(parent[node]);
     }
-
-    public boolean isConnected(int u, int v) {
-        return ultimateParent(u) == ultimateParent(v);
-    }
-
-    public boolean unionByRank(int u, int v) {
-        int ulp_u = ultimateParent(u);
-        int ulp_v = ultimateParent(v);
-
-        if (ulp_u == ulp_v) return false;
-        
-        if (rank[ulp_u] > rank[ulp_v]) {
-            parent[ulp_v] = ulp_u;
-        } else if (rank[ulp_v] > rank[ulp_u]) {
-            parent[ulp_u] = ulp_v;
-        } else{
-            parent[ulp_u] = ulp_v;
-            rank[ulp_v]++;
+    public boolean union(int node1, int node2){
+        int n1Parent = getParent(node1);
+        int n2Parent = getParent(node2);
+        if(n1Parent == n2Parent){
+            return false;
+        }
+        if(size[n1Parent]>size[n2Parent]){
+            parent[n2Parent] = n1Parent;
+        }
+        else if(size[n2Parent] > size[n1Parent]){
+            parent[n1Parent] = n2Parent;
+        }
+        else{
+            parent[n1Parent] = n2Parent;
+            size[n2Parent]++;
         }
         count--;
         return true;
