@@ -25,7 +25,6 @@ class Solution {
 
                  boolean isBobConnected = bobGraph.unionByRank(u,v);
 
-                System.out.println( isBobConnected );
 
                  if (isBobConnected ) {
                     adddedEdges++;
@@ -34,7 +33,6 @@ class Solution {
             }
             else if (type == 1) {
                 boolean isAliceConnected = aliceGraph.unionByRank(u,v);
-                System.out.println( isAliceConnected );
 
                  if (isAliceConnected) {
                     adddedEdges++;
