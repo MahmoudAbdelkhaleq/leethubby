@@ -6,8 +6,8 @@ class Solution {
         int addedEdges = 0;
         for(int [] edge: edges){
             int type = edge[0];
-            int u = edge[1]-1;
-            int v = edge[2]-1;
+            int u = edge[1];
+            int v = edge[2];
             if(type == 3){
                 if(aliceMap.union(u, v)){
                     bobMap.union(u, v);
@@ -39,9 +39,9 @@ class UnionFind {
     // no of groups
     int count;
     public UnionFind(int n){
-        parent = new int[n];
-        size = new int [n];
-        for(int i = 0;i<n;i++){
+        parent = new int[n+1];
+        size = new int [n+1];
+        for(int i = 0;i<=n;i++){
             parent[i] = i;
             size[i] = 0;
         }
