@@ -1,52 +1,49 @@
+class TrieNode{
+    boolean isWord;
+    TrieNode[] childNodes;
+    public TrieNode(){
+        childNodes = new TrieNode[26];
+        isWord = false;
+    }
+}
 class Trie {
-
-boolean endWord;
-    char character;
-    Trie[] children;
-    Trie root;
+    TrieNode root;
     public Trie() {
-        root = new Trie('\0');
+        root = new TrieNode();
     }
-
-    public Trie(char ch){
-        character = ch;
-        endWord = false;
-        children = new Trie[26];
-        Arrays.fill(children, null);
-    }
-    
     public void insert(String word) {
-        Trie pointer = root;
-        for(int i = 0; i < word.length(); i++){
-            char ch = word.charAt(i);
-            if(pointer.children[ch - 'a'] == null){
-                pointer.children[ch - 'a'] = new Trie(ch);
+        TrieNode current = root;
+        for(char c: word.toCharArray()){
+            if(current.childNodes[c-'a']!=null){
+                current = current.childNodes[c-'a'];
             }
-            pointer = pointer.children[ch - 'a'];
+            else{
+                TrieNode node = new TrieNode();
+                current.childNodes[c-'a'] = node;
+                current = node;
+            }
         }
-        pointer.endWord = true;
+        current.isWord = true;
     }
     
     public boolean search(String word) {
-        Trie pointer = root;
-        for(int i = 0; i < word.length(); i++){
-            char ch = word.charAt(i);
-            if(pointer.children[ch - 'a'] == null){
+        TrieNode current = root;
+        for(char c: word.toCharArray()){
+            if(current.childNodes[c-'a'] == null){
                 return false;
             }
-            pointer = pointer.children[ch - 'a'];
+            current = current.childNodes[c-'a'];
         }
-        return pointer.endWord;
+        return current.isWord;
     }
     
     public boolean startsWith(String prefix) {
-        Trie pointer = root;
-        for(int i = 0; i < prefix.length(); i++){
-            char ch = prefix.charAt(i);
-            if(pointer.children[ch - 'a'] == null){
+        TrieNode current = root;
+        for(char c: prefix.toCharArray()){
+            if(current.childNodes[c-'a'] == null){
                 return false;
             }
-            pointer = pointer.children[ch - 'a'];
+            current = current.childNodes[c-'a'];
         }
         return true;
     }
