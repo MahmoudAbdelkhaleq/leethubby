@@ -1,24 +1,53 @@
 class Trie {
 
-    HashSet<String> data;
+boolean endWord;
+    char character;
+    Trie[] children;
+    Trie root;
     public Trie() {
-        data = new HashSet<String>();
+        root = new Trie('\0');
+    }
+
+    public Trie(char ch){
+        character = ch;
+        endWord = false;
+        children = new Trie[26];
+        Arrays.fill(children, null);
     }
     
     public void insert(String word) {
-        data.add(word);
+        Trie pointer = root;
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(pointer.children[ch - 'a'] == null){
+                pointer.children[ch - 'a'] = new Trie(ch);
+            }
+            pointer = pointer.children[ch - 'a'];
+        }
+        pointer.endWord = true;
     }
     
     public boolean search(String word) {
-        return data.contains(word);
+        Trie pointer = root;
+        for(int i = 0; i < word.length(); i++){
+            char ch = word.charAt(i);
+            if(pointer.children[ch - 'a'] == null){
+                return false;
+            }
+            pointer = pointer.children[ch - 'a'];
+        }
+        return pointer.endWord;
     }
     
     public boolean startsWith(String prefix) {
-        for(String s: data){
-            if(s.startsWith(prefix)){
-                return true;
+        Trie pointer = root;
+        for(int i = 0; i < prefix.length(); i++){
+            char ch = prefix.charAt(i);
+            if(pointer.children[ch - 'a'] == null){
+                return false;
             }
+            pointer = pointer.children[ch - 'a'];
         }
-        return false;
+        return true;
     }
 }
