@@ -15,16 +15,16 @@
  */
 class Solution {
     public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
-        List<TreeNode> forest = new ArrayList<>();
+        List<TreeNode> res = new ArrayList<>();
         HashSet<Integer> toDelete = new HashSet<>();
         for(int n: to_delete){
             toDelete.add(n);
         }
-        forest.add(root);
-        findAndDelete(null, root, toDelete, forest);
-        return forest;
+        res.add(root);
+        findAndDelete(null, root, toDelete, res);
+        return res;
     }
-    private void findAndDelete(TreeNode parent, TreeNode node, HashSet<Integer> toDelete, List<TreeNode> forest){
+    private void findAndDelete(TreeNode parent, TreeNode node, HashSet<Integer> toDelete, List<TreeNode> res){
         if(node == null){
             return;
         }
@@ -33,11 +33,9 @@ class Solution {
             TreeNode left = node.left;
             TreeNode right = node.right;
             // remove the node from the tree
-            // if the parent of a node is null then this node is a root of a tree and needs to be removed from the list
             if(parent == null){
-                forest.remove(node);
+                res.remove(node);
             }
-            // derefrence the node from its parent
             else{
                 if(parent.left == node){
                     parent.left = null;
@@ -46,19 +44,19 @@ class Solution {
                     parent.right = null;
                 }
             }
-            // add the 2 new trees
+            // if it is a root
             if(left!=null){
-                forest.add(left);
-                findAndDelete(null, left, toDelete, forest);
+                res.add(left);
+                findAndDelete(null, left, toDelete, res);
             }
             if(right!=null){
-                forest.add(right);
-                findAndDelete(null, right, toDelete, forest);
+                res.add(right);
+                findAndDelete(null, right, toDelete, res);
             }
         }
         else{
-            findAndDelete(node, node.left, toDelete, forest);
-            findAndDelete(node, node.right, toDelete, forest);
+            findAndDelete(node, node.left, toDelete, res);
+            findAndDelete(node, node.right, toDelete, res);
         }
     }
 }
