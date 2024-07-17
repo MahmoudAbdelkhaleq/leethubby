@@ -15,16 +15,16 @@
  */
 class Solution {
     public List<TreeNode> delNodes(TreeNode root, int[] to_delete) {
-        HashSet<TreeNode> forest = new HashSet<>();
+        List<TreeNode> forest = new ArrayList<>();
         HashSet<Integer> toDelete = new HashSet<>();
         for(int n: to_delete){
             toDelete.add(n);
         }
         forest.add(root);
         findAndDelete(null, root, toDelete, forest);
-        return new ArrayList<>(forest);
+        return forest;
     }
-    private void findAndDelete(TreeNode parent, TreeNode node, HashSet<Integer> toDelete, HashSet<TreeNode> forest){
+    private void findAndDelete(TreeNode parent, TreeNode node, HashSet<Integer> toDelete, List<TreeNode> forest){
         if(node == null){
             return;
         }
