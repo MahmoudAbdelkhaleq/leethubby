@@ -1,14 +1,12 @@
 class Solution {
-    public String countOfAtoms(String formula) {
+        public String countOfAtoms(String formula) {
         Set<String> elements = new HashSet<>();
-        Stack<HashMap<String, Integer>> stack = new Stack();
+        Stack<TreeMap<String, Integer>> stack = new Stack();
         // stack.push(new HashMap<>());
         reformulate(formula, 0, elements, stack);
         StringBuilder res = new StringBuilder();
-        HashMap<String, Integer> data = stack.pop();
-        List<String> sortedElements = new ArrayList<>(elements);
-        Collections.sort(sortedElements);
-        for(String element: sortedElements){
+        TreeMap<String, Integer> data = stack.pop();
+        for(String element: data.keySet()){
             res.append(element);
             if(data.get(element)>1){
                 res.append(data.get(element));
@@ -16,9 +14,9 @@ class Solution {
         }
         return res.toString();
     }
-    private int reformulate(String formula, int index, Set<String> elements, Stack<HashMap<String, Integer>> stack){
+    private int reformulate(String formula, int index, Set<String> elements, Stack<TreeMap<String, Integer>> stack){
 
-        HashMap<String, Integer> currentData = new HashMap<>();
+        TreeMap<String, Integer> currentData = new TreeMap<>();
         stack.push(currentData);
         int i = index;
         String element = "";
@@ -71,7 +69,7 @@ class Solution {
         }
         return i;
     }
-    private void merge(HashMap<String, Integer> top, HashMap<String, Integer> current){
+    private void merge(TreeMap<String, Integer> top, TreeMap<String, Integer> current){
         for(String s: current.keySet()){
             top.put(s, top.getOrDefault(s,0)+current.get(s));
         }
