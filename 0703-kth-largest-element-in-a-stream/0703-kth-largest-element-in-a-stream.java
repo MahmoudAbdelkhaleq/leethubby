@@ -1,35 +1,23 @@
 class KthLargest {
-    int [] arr;
-    int index = 0;
-    int kth;
+    PriorityQueue<Integer> minHeap;
+    int k;
     public KthLargest(int k, int[] nums) {
-        arr = new int [20000];
-        Arrays.fill(arr,-1);
-        kth = k;
-        for(int n:nums){
-            insert(n);
+        minHeap = new PriorityQueue<>();
+        this.k = k;
+
+        for (int num : nums) {
+            add(num);
         }
     }
     
     public int add(int val) {
-        insert(val);
-        if(index-kth<0){
-            return 0;
-        }
-        return arr[index-kth];
-    }
-    public void insert(int n){
-        if(index == 0){
-            arr[index] = n;
-        }
-        else{
-            int i = index-1;
-            for(;i>=0 && n<arr[i];i--){
-                arr[i+1] = arr[i];
+        if (minHeap.size() < k || minHeap.peek() < val) {
+            minHeap.add(val);
+            if (minHeap.size() > k) {
+                minHeap.remove();
             }
-            arr[i+1] = n;
         }
-        index++;
+        return minHeap.peek();
     }
 }
 
