@@ -1,11 +1,10 @@
 class Solution {
     public int minSteps(int n) {
-        int [] dp = new int [n+1];
-        for(int i = 2; i< n+1; i++){
-            int divisor = gcd(i);
-            dp[i] = dp[divisor] + (i/divisor);
+        if(n == 1){
+            return 0;
         }
-        return dp[n];
+        int divisor = gcd(n);
+        return minSteps(divisor) + n/divisor;
     }
     public int gcd(int n){
         for (int i = 2; i <= n/2; i++) {
