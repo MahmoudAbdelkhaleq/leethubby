@@ -2,7 +2,6 @@ class Solution {
     public int findComplement(int num) {
         int bits = getLog(num);
         long roof = (long) Math.pow(2, bits) - 1;
-        System.out.println(roof);
         return (int)(roof-num);
     }
     public int getLog(int num){
