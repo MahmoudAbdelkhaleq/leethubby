@@ -1,12 +1,8 @@
 class Solution {
     public int getLucky(String s, int k) {
-        String numString = "";
-        for(char c: s.toCharArray()){
-            numString+=(c-'a'+1);
-        }
         int num = 0;
-        for(char c:numString.toCharArray()){
-            num+=c-'0';
+        for(char c:s.toCharArray()){
+            num+=sumDigit(c-'a'+1);
         }
         while(k>1){
             num = sumDigit(num);
