@@ -10,7 +10,8 @@ class Solution {
             return new int[0];
         }
         Arrays.fill(res, sum/n);
-        for(int i = 0;i<sum%n;i++){
+        int biggerNums = sum%n;
+        for(int i = 0;i<biggerNums;i++){
             res[i]++;
         }
         return res;
