@@ -15,22 +15,18 @@ class Solution {
             set.add(n);
         }
         ListNode current = head;
-        ListNode prev = null;
-        while(current!=null){
-            if(set.contains(current.val)){
-                if(current == head){
-                    current = current.next;
-                    head = current;
-                }
-                else{
-                    prev.next = current.next;
-                    current = prev.next;
-                }
+        // check each element but the first one
+        while(current.next!=null){
+            if(set.contains(current.next.val)){
+                current.next = current.next.next;
             }
             else{
-                prev = current;
-                current=current.next;
+                current = current.next;
             }
+        }
+        // check the first one
+        if(set.contains(head.val)){
+            head = head.next;
         }
         return head;
     }
