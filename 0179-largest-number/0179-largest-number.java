@@ -19,17 +19,11 @@ class Solution {
                 }
                 if(s1.length()>s2.length()){
                     int res = s2.charAt(0)-s1.charAt(i);
-                    if(res == 0){
-                        return compare(s1.substring(i),s2);
-                    }
-                    return res;
+                    return res != 0 ? res : compare(s1.substring(i),s2);
                 }
                 if(s2.length()>s1.length()){
                     int res = s2.charAt(i)-s1.charAt(0);;
-                    if(res == 0){
-                        return compare(s1,s2.substring(i));
-                    }
-                    return res;
+                    return res != 0 ? res : compare(s1,s2.substring(i));
                 }
                 return 0;
             }
