@@ -6,13 +6,7 @@ class Solution {
         if (expression.length() == 0) return results;
 
         // Base case: if the string is a single character, treat it as a number and return it
-        if (expression.length() == 1) {
-            results.add(Integer.parseInt(expression));
-            return results;
-        }
-
-        // If the string has only two characters and the first character is a digit, parse it as a number
-        if (expression.length() == 2) {
+        if (expression.length() <= 2) {
             results.add(Integer.parseInt(expression));
             return results;
         }
