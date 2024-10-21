@@ -52,17 +52,17 @@ class Solution {
         return !parseBoolExpr(inputs);
     }
     private int getEnd(String s, int index){
-        Stack<Integer> brackets = new Stack<>();
+        int count = 0;
         for(int i = index;i<s.length();i++){
             char c = s.charAt(i);
             if(c == '('){
-                brackets.push(0);
+                count++;
                 continue;
             }
             if(c == ')'){
-                brackets.pop();
+                count--;
             }
-            if(brackets.isEmpty()){
+            if(count == 0){
                 return i;
             }
         }
