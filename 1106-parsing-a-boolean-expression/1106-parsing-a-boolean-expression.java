@@ -11,7 +11,7 @@ class Solution {
     }
     private boolean andEval(String inputs){
         boolean result = true;
-        for(int i = 0;i<inputs.length();i++){
+        for(int i = 0;i<inputs.length() && result;i++){
             char c = inputs.charAt(i);
             switch(c){
                 case 'f': result = false;
@@ -23,14 +23,12 @@ class Solution {
                     i = end+1;
                     break;
             }
-            if(!result)
-                break;
         }
         return result;
     }
     private boolean orEval(String inputs){
         boolean result = false;
-        for(int i = 0;i<inputs.length();i++){
+        for(int i = 0;i<inputs.length() && !result;i++){
             char c = inputs.charAt(i);
             switch(c){
                 case 't': result = true;
@@ -42,8 +40,6 @@ class Solution {
                     i = end+1;
                     break;
             }
-            if(result)
-                break;
         }
         return result;
     }
