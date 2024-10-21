@@ -1,16 +1,13 @@
 class Solution {
     public boolean parseBoolExpr(String expression) {
-        for(int i = 0;i<expression.length();i++){
-            switch (expression.charAt(i)){
-                case '&':
-                    return andEval(expression.substring(2,expression.length()-1));
-                case '|':
-                    return orEval(expression.substring(2,expression.length()-1));
-                case '!':
-                    return notEval(expression.substring(2,expression.length()-1));
-            }
+        switch (expression.charAt(0)){
+            case '&':
+                return andEval(expression.substring(2,expression.length()-1));
+            case '|':
+                return orEval(expression.substring(2,expression.length()-1));
+            default:
+                return notEval(expression.substring(2,expression.length()-1));
         }
-        return false;
     }
     private boolean andEval(String inputs){
         boolean result = true;
@@ -59,17 +56,17 @@ class Solution {
         return !parseBoolExpr(inputs);
     }
     private int getEnd(String s, int index){
-        Stack<Integer> bracketsIndeces = new Stack<>();
+        Stack<Integer> brackets = new Stack<>();
         for(int i = index;i<s.length();i++){
             char c = s.charAt(i);
             if(c == '('){
-                bracketsIndeces.push(0);
+                brackets.push(0);
                 continue;
             }
             if(c == ')'){
-                bracketsIndeces.pop();
+                brackets.pop();
             }
-            if(bracketsIndeces.isEmpty()){
+            if(brackets.isEmpty()){
                 return i;
             }
         }
