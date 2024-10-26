@@ -22,31 +22,7 @@ class Solution {
         if(root1.val != root2.val){
             return false;
         }
-        return isEquiv(root1, root2);
-    }
-    private boolean isEquiv(TreeNode node1, TreeNode node2){
-        List<TreeNode> children1 = new ArrayList<>();
-        List<TreeNode> children2 = new ArrayList<>();
-        if(node1.left!=null){
-            children1.add(node1.left);
-        }
-        if(node1.right!=null){
-            children1.add(node1.right);
-        }
-        if(node2.left!=null){
-            children2.add(node2.left);
-        }
-        if(node2.right!=null){
-            children2.add(node2.right);
-        }
-        if(children1.size()!=children2.size())
-            return false;
-        if(children1.size() == 0)
-            return true;
-        if(children1.size() == 1){
-            return flipEquiv(children1.get(0), children2.get(0));
-        }
-        return (flipEquiv(children1.get(0), children2.get(0)) && flipEquiv(children1.get(1), children2.get(1))) || 
-            (flipEquiv(children1.get(0), children2.get(1)) && flipEquiv(children1.get(1), children2.get(0)));
+        return (flipEquiv(root1.left, root2.left) && flipEquiv(root1.right, root2.right))||
+            (flipEquiv(root1.left, root2.right) && flipEquiv(root1.right, root2.left));
     }
 }
