@@ -1,7 +1,7 @@
 class Solution {
     public long findScore(int[] nums) {
         long score = 0;
-        Set<Integer> markedIndeces = new HashSet<>();
+        boolean [] marked = new boolean[nums.length];
         PriorityQueue<int []> pq = new PriorityQueue<>((a,b) -> {
             if (a[0] != b[0])
                 return a[0] - b[0];
@@ -14,10 +14,12 @@ class Solution {
         }
         while(!pq.isEmpty()){
             int [] current = pq.poll();
-            if(!markedIndeces.contains(current[1])){
+            if(!marked[current[1]]){
                 score+=current[0];
-                markedIndeces.add(current[1]-1);
-                markedIndeces.add(current[1]+1);
+                if(current[1]>0)
+                    marked[current[1]-1] = true;
+                if(current[1]<nums.length-1)
+                    marked[current[1]+1] = true;
             }
         }
         return score;
